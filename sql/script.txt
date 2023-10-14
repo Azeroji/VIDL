@@ -1,0 +1,48 @@
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email_address VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100),
+    profile_picture_url VARCHAR(255),
+	bio VARCHAR(100),
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE UserRelationship (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    follower_id INT,
+    following_id INT,
+    FOREIGN KEY (follower_id) REFERENCES User(id),
+    FOREIGN KEY (following_id) REFERENCES User(id)
+);
+
+CREATE TABLE Post (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    caption VARCHAR(100),
+    post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    poster_id INT NOT NULL,
+    url VARCHAR(255),
+    FOREIGN KEY (poster_id) REFERENCES User(id)
+);
+
+USE VIDL;
+
+SELECT username, profile_picture_url from user WHERE username LIKE 'azeroji%';
+
+SELECT * FROM USER;
+
+SELECT * from userrelationship;
+
+SELECT username FROM user WHERE id = ( SELECT follower_id FROM UserRelationship WHERE following_id = (SELECT id from user WHERE username = 'azeroji2') ) ;
+
+SELECT * FROM POST;
+
+SELECT *
+FROM Post
+ORDER BY RAND()
+LIMIT 25;
+
+SELECT Post.*, User.username, User.profile_picture_url
+FROM Post 
+JOIN User ON Post.poster_id = User.id ORDER BY RAND() LIMIT 25;
