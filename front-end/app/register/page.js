@@ -55,7 +55,8 @@ const page = (props) => {
       if (account.username !== '' && account.password !== '' && account.cpassword !== '') {
         if (account.password === account.cpassword) {
           if (strength(account.password) > 1) {
-            const response = await axios.post('http://localhost:5000/api/register', {
+            const hostname = window.location.hostname
+            const response = await axios.post('http://'+hostname+':5000/api/register', {
               log: account,
             });
             if (response.data.success) {

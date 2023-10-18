@@ -47,7 +47,8 @@ const Account = () => {
           };
   
           try {
-            const response = await axios.get(`http://localhost:5000/api/info`, axiosConfig);
+            const hostname = window.location.hostname
+            const response = await axios.get('http://'+hostname+':5000/api/info', axiosConfig);
             setData(response.data);
             setLoading(false);
           } catch (error) {

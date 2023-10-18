@@ -1,55 +1,20 @@
 import express from 'express'
 import cors from 'cors';
 import { logIn, register, info, follow, unfollow, followers, following, post, posts, infoId, feed, search } from './database.js';
-import jwt from 'jsonwebtoken';
-import multer from 'multer'
-import {v4} from 'uuid'
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      const randomFilename = `${v4()}-${file.originalname}`;
-      cb(null, randomFilename);
-    },
-  });
-
-const upload = multer({ storage: storage });
+import authenticateToken from './middlewares/authMiddleware.js';
+import upload from './middlewares/uploadMiddleware.js';
 
 const app = express();
 
 app.use(
     cors({
-        origin: "http://localhost:3000"
+        origin: "*"
     })
 );
 
 app.use(express.json());
 
 app.use(express.static('uploads'));
-
-/*
-    AUTH MIDDLE WARE
-                       */
-
-function authenticateToken(req, res, next) {
-    const token = req.header('Authorization');
-
-    if (!token) {
-        return res.status(401).json({ message: 'Access denied' });
-    }
-
-    jwt.verify(token, 'bV7Bn^TmEgZ!xQ2c@L#J9W4mKpA&d3G8', (error, decoded) => {
-        if (error) {
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-
-        req.userId = decoded.userId;
-        next();
-    });
-}
 
 /*
         AUTH

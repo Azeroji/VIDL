@@ -26,8 +26,8 @@ const UploadPost = () => {
           const formData = new FormData();
           formData.append('fileName', file);
           formData.append('caption', caption);
-  
-          const response = await axios.post('http://localhost:5000/api/uploadpost', formData, {
+          const hostname = window.location.hostname
+          const response = await axios.post('http://'+hostname+':5000/api/uploadpost', formData, {
             headers: {
               'Authorization': token,
               'Content-Type': 'multipart/form-data',

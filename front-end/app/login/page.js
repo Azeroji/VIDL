@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 
 import { AiFillEye } from 'react-icons/ai'
@@ -27,7 +27,8 @@ const page = (props) => {
   const Login = async () => {
     try {
       if (account.username !== '' && account.password !== '') {
-        const response = await axios.post('http://localhost:5000/api/login', {
+        const hostname = window.location.hostname
+        const response = await axios.post('http://'+hostname+':5000/api/login', {
           log: account,
         });
         if (response.data.success) {

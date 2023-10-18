@@ -24,9 +24,11 @@ const Account = ({params}) => {
           }
       }
       try {
-          const response = await axios.post('http://localhost:5000/api/follow',  {
+          const hostname = window.location.hostname
+          const response = await axios.post('http://'+hostname+':5000/api/follow',  {
             username: username,
           }, axiosConfig)
+          location.reload()
       } catch (error) {
         console.error(error);
       }
@@ -42,9 +44,11 @@ const Account = ({params}) => {
         }
     }
     try {
-        const response = await axios.post('http://localhost:5000/api/unfollow',  {
+        const hostname = window.location.hostname
+        const response = await axios.post('http://'+hostname+':5000/api/unfollow',  {
           username: username,
         }, axiosConfig)
+        location.reload()
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +66,8 @@ const Account = ({params}) => {
           };
   
           try {
-            const response = await axios.get(`http://localhost:5000/api/info/${username}`, axiosConfig);
+            const hostname = window.location.hostname
+            const response = await axios.get('http://'+hostname+`:5000/api/info/${username}`, axiosConfig);
             setData(response.data);
             setLoading(false);
           } catch (error) {

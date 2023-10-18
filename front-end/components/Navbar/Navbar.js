@@ -11,6 +11,7 @@ import { AiOutlineUser } from 'react-icons/ai'
 
 const Navbar = (props) => {
   const pathname = usePathname();
+  const hostname = window.location.hostname
 
   const isActive = (path) => pathname === path;
   return (
@@ -18,7 +19,7 @@ const Navbar = (props) => {
       <Link href="/"> <FiUsers size={32} className={`${isActive('/') ? 'text-primary' : ''} hover:text-primary`}/> </Link>
       <Link href="search"> <BiSearchAlt size={32} className={`${isActive('/search') ? 'text-primary' : ''} hover:text-primary`}/> </Link>
       <Link href="messages"> <TbMessage size={32} className={`${isActive('/messages') ? 'text-primary' : ''} hover:text-primary`}/> </Link>
-      <Link href="account"> <AiOutlineUser size={32} className={`${isActive('/account') ? 'text-primary' : ''} hover:text-primary`}/> </Link>
+      <Link href={'http://'+hostname+':3000/account'}> <AiOutlineUser size={32} className={`${isActive('/account') ? 'text-primary' : ''} hover:text-primary`}/> </Link>
     </nav>
   )
 }

@@ -14,7 +14,8 @@ const page = () => {
 
   const fetchData = async (username) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/search/${username}`);
+        const hostname = window.location.hostname
+        const response = await axios.get('http://'+hostname+`:5000/api/search/${username}`);
         setUsers(response.data.users);
       } catch (error) {
         console.log(error);

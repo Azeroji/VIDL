@@ -2,7 +2,9 @@ import mysql from 'mysql2'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 
-const urlPrefix = 'http://localhost:5000/';
+const urlPrefixes = 'http://localhost:5000/';
+const hostname = '10.0.5.94';
+const urlPrefix = 'http://'+hostname+':5000/';
 
 const pool = mysql.createPool({
   host: 'localhost',

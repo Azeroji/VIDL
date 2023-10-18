@@ -14,12 +14,12 @@ import CircularProgress from '@mui/material/CircularProgress'
 const Post = (props) => {
     return (
       <div className='border-t-[0.25px] border-gris'>
-        <div className='flex items-center px-[10px] py-[10px] gap-x-[10px]'>
+        <Link href={`/account/${props.username}`} className='flex items-center px-[10px] py-[10px] gap-x-[10px]'>
             <div className="rounded-full overflow-hidden h-[32px] w-[32px]">
                 <img src={props.profile_picture_url ? props.profile_picture_url : "https://ih0.redbubble.net/image.1046392278.3346/raf,360x360,075,t,fafafa:ca443f4786.jpg" } width="96px" className='object-cover w-full h-full' />
             </div>
           <p className='text-[16px] font-semibold'>{props.username}</p>
-        </div>
+        </Link>
         <div className="border-t border-b border-gris h-[100vw] w-[100vw]">
             <img src={props.url} alt="Image" className="object-cover w-full h-full" />
         </div>
@@ -43,7 +43,8 @@ export default function Home() {
         };
 
         try {
-          const response = await axios.get(`http://localhost:5000/api/feed`, axiosConfig);
+          const hostname = window.location.hostname
+          const response = await axios.get('http://'+hostname+':5000/api/feed', axiosConfig);
           setData(response.data);
           setLoading(false);
         } catch (error) {
@@ -77,7 +78,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        { data.posts.map( post => { return(
+        { data && data.posts.map( post => { return(
           <Post username={post.username} profile_picture_url={post.profile_picture_url} url={post.url} caption={post.caption} />
         ) } ) }
       </div>
